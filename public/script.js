@@ -1,9 +1,39 @@
-// todo.js
+// ----- NOTATER -----
+async function loadNotes() {
+    const res = await fetch("/notes")
+    const data = await res.json()
 
-// Filnavn for todo-liste
-const TODO_FILE = "todo.json"
+    const list = document.getElementById("notesList")
+    list.innerHTML = ""
 
-// Hent og vis alle todo-oppgaver
+    data.forEach(note => {
+        const li = document.createElement("li")
+        li.innerHTML = `<strong>${note.title}</strong><br>${note.content}`
+        list.appendChild(li)
+    })
+}
+
+async function addNote() {
+    const titleInput = document.getElementById("noteTitle")
+    const contentInput = document.getElementById("noteContent")
+
+    if (!titleInput.value || !contentInput.value) {
+        alert("Fyll inn både tittel og notat")
+        return
+    }
+
+    await fetch("/notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: titleInput.value, content: contentInput.value })
+    })
+
+    titleInput.value = ""
+    contentInput.value = ""
+    loadNotes()
+}
+
+// ----- TODO -----
 async function loadTodos() {
     const res = await fetch("/todos")
     const data = await res.json()
@@ -13,51 +43,40 @@ async function loadTodos() {
 
     data.forEach((todo, index) => {
         const li = document.createElement("li")
-        
-        // Checkbox for å krysse av oppgave
-        const checkbox = document.createElement("input")
-        checkbox.type = "checkbox"
-        checkbox.checked = todo.done
-        checkbox.addEventListener("change", () => toggleTodo(index))
-
-        // Oppgave-tekst
-        const text = document.createElement("span")
-        text.textContent = todo.text
-        if (todo.done) text.style.textDecoration = "line-through"
-
-        li.appendChild(checkbox)
-        li.appendChild(text)
+        li.className = todo.done ? "done" : ""
+        li.innerHTML = `
+            <label>
+                <input type="checkbox" ${todo.done ? "checked" : ""} onchange="toggleTodo(${index}, this.checked)" />
+                ${todo.task}
+            </label>
+        `
         list.appendChild(li)
     })
 }
 
-// Legg til ny todo-oppgave
 async function addTodo() {
     const input = document.getElementById("todoInput")
-    const text = input.value.trim()
-
-    if (!text) return
+    if (!input.value) return
 
     await fetch("/todos", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ text, done: false })
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ task: input.value })
     })
 
     input.value = ""
     loadTodos()
 }
 
-// Oppdater status på todo
-async function toggleTodo(index) {
+async function toggleTodo(index, done) {
     await fetch(`/todos/${index}`, {
-        method: "PATCH"
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ done })
     })
-
     loadTodos()
 }
 
-// Last inn todo-liste når siden åpnes
+// Last inn begge når siden åpnes
+loadNotes()
 loadTodos()
