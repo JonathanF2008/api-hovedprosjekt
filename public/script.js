@@ -25,7 +25,10 @@ async function addNote() {
     await fetch("/notes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: titleInput.value, content: contentInput.value })
+        body: JSON.stringify({
+            title: titleInput.value,
+            content: contentInput.value
+        })
     })
 
     titleInput.value = ""
@@ -47,7 +50,7 @@ async function loadTodos() {
         li.innerHTML = `
             <label>
                 <input type="checkbox" ${todo.done ? "checked" : ""} onchange="toggleTodo(${index}, this.checked)" />
-                ${todo.task}
+                <span>${todo.task}</span>
             </label>
         `
         list.appendChild(li)
@@ -61,7 +64,7 @@ async function addTodo() {
     await fetch("/todos", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ task: input.value })
+        body: JSON.stringify({ task: input.value }) // ⚠️ må hete 'task'
     })
 
     input.value = ""
@@ -77,6 +80,6 @@ async function toggleTodo(index, done) {
     loadTodos()
 }
 
-// Last inn begge når siden åpnes
+// ----- Last inn begge når siden åpnes -----
 loadNotes()
 loadTodos()
