@@ -24,7 +24,7 @@ app.get("/notes", (req, res) => {
 app.post("/notes", (req, res) => {
     notes.push(req.body)
 
-    // 💾 Lagre til JSON-fil
+    
     fs.writeFileSync(FILE, JSON.stringify(notes, null, 2))
 
     res.json({ message: "Saved" })
