@@ -5,7 +5,15 @@ const app = express()
 app.use(express.json())
 app.use(express.static("public"))
 
+const FILE = "data.json"
+
+// 📥 Les fra fil når server starter
 let notes = []
+
+if (fs.existsSync(FILE)) {
+    const data = fs.readFileSync(FILE)
+    notes = JSON.parse(data)
+}
 
 // GET
 app.get("/notes", (req, res) => {
@@ -15,6 +23,10 @@ app.get("/notes", (req, res) => {
 // POST
 app.post("/notes", (req, res) => {
     notes.push(req.body)
+
+    // 💾 Lagre til JSON-fil
+    fs.writeFileSync(FILE, JSON.stringify(notes, null, 2))
+
     res.json({ message: "Saved" })
 })
 
