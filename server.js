@@ -7,7 +7,7 @@ app.use(express.static("public"))
 
 const FILE = "data.json"
 
-// 📥 Les fra fil når server starter
+
 let notes = []
 
 if (fs.existsSync(FILE)) {
