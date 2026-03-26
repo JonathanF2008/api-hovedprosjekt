@@ -1,16 +1,38 @@
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     padding: 20px;
 }
 
-input {
+input, textarea {
+    display: block;
+    width: 300px;
+    margin-bottom: 10px;
     padding: 10px;
+    font-size: 14px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
 }
 
 button {
-    padding: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 li {
-    margin-top: 10px;
+    margin-top: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+li strong {
+    font-size: 16px;
 }
