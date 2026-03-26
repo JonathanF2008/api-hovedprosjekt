@@ -1,11 +1,26 @@
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
 
+.container {
+    display: flex;
+    width: 100%;
+    gap: 40px; /* Avstand mellom notater og todo */
+}
+
+/* Kolonner */
+.notes, .todos {
+    flex: 1; /* Like bredde */
+}
+
+/* Input og textarea styling */
 input, textarea {
     display: block;
-    width: 300px;
+    width: 100%;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 14px;
@@ -16,12 +31,14 @@ textarea {
     resize: vertical;
 }
 
+/* Knapp styling */
 button {
     padding: 10px 20px;
     font-size: 14px;
     cursor: pointer;
 }
 
+/* Liste styling */
 ul {
     list-style-type: none;
     padding: 0;
@@ -33,6 +50,12 @@ li {
     padding-bottom: 10px;
 }
 
+/* Tittel på notat / todo oppgave */
 li strong {
     font-size: 16px;
+}
+
+/* Checkbox i todo-liste */
+li input[type="checkbox"] {
+    margin-right: 10px;
 }

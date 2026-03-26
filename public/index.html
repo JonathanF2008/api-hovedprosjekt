@@ -1,25 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="no">
 <head>
-    <title>Notes</title>
+    <meta charset="UTF-8">
+    <title>Notater</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>Notes</h1>
+    <h1>Notater</h1>
 
-<!-- Input for tittel -->
-<input id="noteTitle" placeholder="Tittel" />
+    
+    <input id="noteTitle" placeholder="Tittel" />
 
-<!-- Tekstområde for hovedinnhold -->
-<textarea id="noteContent" placeholder="Skriv notatet her..."></textarea>
+    
+    <textarea id="noteContent" placeholder="Skriv notatet her..."></textarea>
 
-<!-- Knapp for å lagre notat -->
-<button onclick="addNote()">Save</button>
+   
+    <button onclick="addNote()">Lagre notat</button>
 
-<!-- Liste der notatene vises -->
-<ul id="notesList"></ul>
+    
+    <ul id="notesList"></ul>
 
-<script src="script.js"></script>
+    <hr>
+
+   
+    <h2>Todo-liste</h2>
+    <input id="todoInput" placeholder="Ny oppgave" />
+    <button onclick="addTodo()">Legg til oppgave</button>
+    <ul id="todoList"></ul>
+
+   
+    <script src="script.js"></script>
+
+   
+    <script src="todo.js"></script>
+
 </body>
 </html>

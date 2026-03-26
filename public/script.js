@@ -1,43 +1,63 @@
-// Hent og vis alle notater
-async function loadNotes() {
-    const res = await fetch("/notes")
+// todo.js
+
+// Filnavn for todo-liste
+const TODO_FILE = "todo.json"
+
+// Hent og vis alle todo-oppgaver
+async function loadTodos() {
+    const res = await fetch("/todos")
     const data = await res.json()
 
-    const list = document.getElementById("notesList")
+    const list = document.getElementById("todoList")
     list.innerHTML = ""
 
-    data.forEach(note => {
+    data.forEach((todo, index) => {
         const li = document.createElement("li")
-        li.innerHTML = `<strong>${note.title}</strong><br>${note.content}`
+        
+        // Checkbox for å krysse av oppgave
+        const checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
+        checkbox.checked = todo.done
+        checkbox.addEventListener("change", () => toggleTodo(index))
+
+        // Oppgave-tekst
+        const text = document.createElement("span")
+        text.textContent = todo.text
+        if (todo.done) text.style.textDecoration = "line-through"
+
+        li.appendChild(checkbox)
+        li.appendChild(text)
         list.appendChild(li)
     })
 }
 
-// Legg til nytt notat
-async function addNote() {
-    const titleInput = document.getElementById("noteTitle")
-    const contentInput = document.getElementById("noteContent")
+// Legg til ny todo-oppgave
+async function addTodo() {
+    const input = document.getElementById("todoInput")
+    const text = input.value.trim()
 
-    if (!titleInput.value || !contentInput.value) {
-        alert("Fyll inn både tittel og notat")
-        return
-    }
+    if (!text) return
 
-    await fetch("/notes", {
+    await fetch("/todos", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-            title: titleInput.value,
-            content: contentInput.value
-        })
+        body: JSON.stringify({ text, done: false })
     })
 
-    titleInput.value = ""
-    contentInput.value = ""
-    loadNotes()
+    input.value = ""
+    loadTodos()
 }
 
-// Last inn notater når siden åpnes
-loadNotes()
+// Oppdater status på todo
+async function toggleTodo(index) {
+    await fetch(`/todos/${index}`, {
+        method: "PATCH"
+    })
+
+    loadTodos()
+}
+
+// Last inn todo-liste når siden åpnes
+loadTodos()
