@@ -56,8 +56,15 @@ app.post("/todos", (req, res) => {
 app.put("/todos/:index", (req, res) => {
     const i = parseInt(req.params.index)
 
+    // LES FRA FIL FØRST (VIKTIG)
+    if (fs.existsSync(TODO_FILE)) {
+        const data = fs.readFileSync(TODO_FILE)
+        todos = JSON.parse(data)
+    }
+
     if (todos[i]) {
-        todos[i].done = req.body.done   // ✅ bruker verdien fra frontend
+        todos[i].done = req.body.done
+
         fs.writeFileSync(TODO_FILE, JSON.stringify(todos, null, 2))
         res.json({ message: "Todo oppdatert" })
     } else {
