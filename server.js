@@ -10,9 +10,7 @@ app.use(express.static("public"))
 const NOTES_FILE = "data.json"
 const TODO_FILE = "todo.json"
 
-// =====================
-// Notater
-// =====================
+
 let notes = []
 if (fs.existsSync(NOTES_FILE)) {
     notes = JSON.parse(fs.readFileSync(NOTES_FILE))
@@ -39,8 +37,11 @@ if (fs.existsSync(TODO_FILE)) {
     todos = JSON.parse(fs.readFileSync(TODO_FILE))
 }
 
-
 app.get("/todos", (req, res) => {
+    if (fs.existsSync(TODO_FILE)) {
+        const data = fs.readFileSync(TODO_FILE)
+        todos = JSON.parse(data)
+    }
     res.json(todos)
 })
 
