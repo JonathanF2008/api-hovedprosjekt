@@ -52,10 +52,11 @@ app.post("/todos", (req, res) => {
 })
 
 
-app.patch("/todos/:index", (req, res) => {
+app.put("/todos/:index", (req, res) => {
     const i = parseInt(req.params.index)
+
     if (todos[i]) {
-        todos[i].done = !todos[i].done
+        todos[i].done = req.body.done   // ✅ bruker verdien fra frontend
         fs.writeFileSync(TODO_FILE, JSON.stringify(todos, null, 2))
         res.json({ message: "Todo oppdatert" })
     } else {
