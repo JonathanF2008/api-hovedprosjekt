@@ -46,7 +46,7 @@ app.get("/todos", (req, res) => {
 
 
 app.post("/todos", (req, res) => {
-    todos.push({ text: req.body.text, done: false })
+    todos.push({ task: req.body.task, done: false })
     fs.writeFileSync(TODO_FILE, JSON.stringify(todos, null, 2))
     res.json({ message: "Todo lagt til" })
 })
