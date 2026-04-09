@@ -36,7 +36,7 @@ async function addNote() {
     loadNotes()
 }
 
-// ----- TODO -----
+// ----- TODO-LISTE -----
 async function loadTodos() {
     const res = await fetch("/todos")
     const data = await res.json()
@@ -77,9 +77,7 @@ async function toggleTodo(index, done) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ done })
     })
-    loadTodos()
 }
 
-// ----- Last inn begge når siden åpnes -----
 loadNotes()
 loadTodos()
