@@ -36,7 +36,7 @@ async function addNote() {
     loadNotes()
 }
 
-// ----- TODO-LISTE -----
+
 async function loadTodos() {
     const res = await fetch("/todos")
     const data = await res.json()
@@ -47,12 +47,22 @@ async function loadTodos() {
     data.forEach((todo, index) => {
         const li = document.createElement("li")
         li.className = todo.done ? "done" : ""
-        li.innerHTML = `
-            <label>
-                <input type="checkbox" ${todo.done ? "checked" : ""} onchange="toggleTodo(${index}, this.checked)" />
-                <span>${todo.task}</span>
-            </label>
-        `
+
+        const checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
+        checkbox.checked = todo.done
+
+        checkbox.addEventListener("change", async () => {
+            await toggleTodo(index, checkbox.checked)
+            li.className = checkbox.checked ? "done" : ""
+        })
+
+        const span = document.createElement("span")
+        span.textContent = todo.task
+
+        li.appendChild(checkbox)
+        li.appendChild(span)
+
         list.appendChild(li)
     })
 }
