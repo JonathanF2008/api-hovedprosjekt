@@ -77,4 +77,9 @@ For å klone prosjektet brukte jeg:
 git clone <repo-url>
 cd api-hovedprosjekt
 npm install
+```
+
+
+13/4.2026:
+Jeg kom meg ikke til skolen denne dagen på grunn av feil i trafikken. Fikk derfor ikke til "pull" på serveren angående TODO listen min. Kan gjøre dette når vi har neste time etter fristen. 
 
