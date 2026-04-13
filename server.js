@@ -34,7 +34,7 @@ app.post("/notes", (req, res) => {
 
 let todos = []
 if (fs.existsSync(TODO_FILE)) {
-    todos = JSON.parse(fs.readFileSync(TODO_FILE))
+    todos = JSON.parse(fs.readFileSync(TODO_FILE, "utf-8"))
 }
 
 app.get("/todos", (req, res) => {
