@@ -1,9 +1,8 @@
 // ----- NOTATER -----
-async function loadNotes() {
+async function loadNotes() { 
     const res = await fetch("/notes")
     const data = await res.json()
 
-    const list = document.getElementById("notesList")
     list.innerHTML = ""
 
     data.forEach(note => {
@@ -13,7 +12,8 @@ async function loadNotes() {
     })
 }
 
-async function addNote() {
+// Her kan man skrive notat og de blir lagret i data.json så de ikke forsvinner. Alert melding hvis feltene ikke er fyllt ut. 
+async function addNote() {  
     const titleInput = document.getElementById("noteTitle")
     const contentInput = document.getElementById("noteContent")
 
